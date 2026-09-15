@@ -7,13 +7,13 @@ import report from "@/assets/report.docx.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Decision Intelligence Suite — Thistlewood Foods" },
+      { title: "Decision Intelligence Suite | Thistlewood Foods" },
       {
         name: "description",
         content:
           "A structured decision intelligence suite: scenario modelling, field intel, tripwires and robustness-adjusted recommendations.",
       },
-      { property: "og:title", content: "Decision Intelligence Suite — Thistlewood Foods" },
+      { property: "og:title", content: "Decision Intelligence Suite | Thistlewood Foods" },
       {
         property: "og:description",
         content:

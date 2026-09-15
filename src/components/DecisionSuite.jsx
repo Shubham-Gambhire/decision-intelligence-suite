@@ -604,10 +604,10 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
           </div>
         )}
 
-        <details className="fragility-explainer">
+        <details className="fragility-explainer" open>
           <summary style={{ color: fragColor }}>What {fragility.toLowerCase()} fragility means</summary>
           <p>
-            Fragility measures how easily the current recommendation could change—not how risky the business is overall.
+            Fragility measures how easily the current recommendation could change, not how risky the business is overall.
             {fragility === "HIGH" && " High means the recommendation needs stress-testing before commitment."}
             {fragility === "MEDIUM" && " Medium means the recommendation is credible but should be monitored."}
             {fragility === "LOW" && " Low means the recommendation is comparatively stable across the current inputs."}
@@ -1357,7 +1357,7 @@ function App() {
       `}</style>
 
       <header className="sticky top-0 z-10" style={{ background: C.bg, borderBottom: `1px solid ${C.border}` }}>
-        <div className="suite-header-main px-4 sm:px-6 lg:px-8 pt-3 pb-2 flex items-center justify-between gap-3">
+        <div className="suite-header-main px-4 sm:px-6 lg:px-8 pt-3 pb-2 flex items-center gap-3">
           <div className="suite-brand flex items-center gap-3 min-w-0">
             <LogoBadge icon={Gem} color={C.ink} animKey={scaleAnimKey} />
             <div className="suite-brand-copy min-w-0">
@@ -1365,10 +1365,13 @@ function App() {
                 <span className="suite-title-short" aria-hidden="true">DIS</span>
                 <span>DECISION INTELLIGENCE SUITE</span>
               </div>
-              <div style={{ fontFamily: F_MONO, fontSize: 10.5, color: C.inkMuted }} className="suite-brand-subtitle">{COMPANY} · {DIVISION} · {DECISION_NAME}</div>
+              {tab === "board" && (
+                <div className="suite-company-note">
+                  Thistlewood Foods is a fictional specialty foods company created for this decision scenario.
+                </div>
+              )}
             </div>
           </div>
-          <div className="suite-header-fragility shrink-0" title={derived.fragilityReasons.join(" ")}><Stamp color={fragColor} framed onClick={() => setTab("board")}>FRAGILITY: {derived.fragility}</Stamp></div>
         </div>
         <div className="px-4 sm:px-6 lg:px-8 flex overflow-x-auto" style={{ scrollbarWidth: "thin" }}>
           {TABS.map((t) => {
