@@ -227,6 +227,20 @@ function computeDerived({ metrics, factors, riskPosture, softWeight, disqualifie
   const gapRatio = Math.abs(evS - evP) / avgEv;
   const distTo50 = Math.abs(robustPct - 50);
 
+  const highFragilityReasons = [];
+  const mediumFragilityReasons = [];
+  if (disqualified.protect && disqualified.surge) {
+    highFragilityReasons.push("Both options are blocked by active hard constraints.");
+  } else if (disqualified[leaderId]) {
+    highFragilityReasons.push("The financial leader is blocked by an active hard constraint.");
+  }
+  if (winProb < 55) highFragilityReasons.push(`The financial leader wins only ${winProb.toFixed(0)}% of weighted scenarios (below 55%).`);
+  else if (winProb < 70) mediumFragilityReasons.push(`The financial leader wins ${winProb.toFixed(0)}% of weighted scenarios (below 70%).`);
+  if (gapRatio < 0.05) highFragilityReasons.push("The expected-value advantage is under 5%, so a small change can reverse the ranking.");
+  else if (gapRatio < 0.15) mediumFragilityReasons.push("The expected-value advantage is under 15%, leaving a limited margin.");
+  if (distTo50 < 5) highFragilityReasons.push("The robustness position is within 5 points of neutral, indicating an almost even decision.");
+  else if (distTo50 < 15) mediumFragilityReasons.push("The robustness position is within 15 points of neutral.");
+
   let fragility = "LOW";
   if (disqualified[leaderId] || (disqualified.protect && disqualified.surge)) {
     fragility = "HIGH";
@@ -241,6 +255,11 @@ function computeDerived({ metrics, factors, riskPosture, softWeight, disqualifie
     robustPct,
     robustPctRaw: robustPct.toFixed(0),
     fragility,
+    fragilityReasons: fragility === "HIGH"
+      ? highFragilityReasons
+      : fragility === "MEDIUM"
+        ? mediumFragilityReasons
+        : ["The leader has at least a 70% scenario win rate, a 15% expected-value margin, and a clear robustness lean."],
     netSoftTilt: netSoft,
     softContribution,
     combined,
@@ -527,7 +546,7 @@ function PositionLine({ financialPct, robustPct, disqualified, protectLabel, sur
 /* ---------------------------------------------------------
    SITUATION BOARD
 --------------------------------------------------------- */
-function SituationBoard({ metrics, financialOptimumId, disqualified, financialPct, robustPct, fragility, factors, robustPctRaw, goTo, options, softContribution }) {
+function SituationBoard({ metrics, financialOptimumId, disqualified, financialPct, robustPct, fragility, fragilityReasons, factors, robustPctRaw, goTo, options, softContribution }) {
   const evP = metrics.protect?.ev ?? 0, evS = metrics.surge?.ev ?? 0;
   const advantage = Math.abs(evS - evP);
   const leader = options.find((o) => o.id === financialOptimumId) || options[0];
@@ -584,6 +603,17 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
             <p style={{ fontFamily: F_BODY, fontSize: 14, color: C.inkMuted, lineHeight: 1.55, marginTop: 6, maxWidth: 640 }}>{rationale}</p>
           </div>
         )}
+
+        <details className="fragility-explainer">
+          <summary style={{ color: fragColor }}>What {fragility.toLowerCase()} fragility means</summary>
+          <p>
+            Fragility measures how easily the current recommendation could change—not how risky the business is overall.
+            {fragility === "HIGH" && " High means the recommendation needs stress-testing before commitment."}
+            {fragility === "MEDIUM" && " Medium means the recommendation is credible but should be monitored."}
+            {fragility === "LOW" && " Low means the recommendation is comparatively stable across the current inputs."}
+          </p>
+          <ul>{fragilityReasons.map((reason) => <li key={reason}>{reason}</li>)}</ul>
+        </details>
 
         {/* Compact key numbers under the recommendation */}
         <div className="flex flex-wrap gap-4 mt-4 pt-3" style={{ borderTop: `1px solid ${C.borderSoft}` }}>
@@ -1327,15 +1357,18 @@ function App() {
       `}</style>
 
       <header className="sticky top-0 z-10" style={{ background: C.bg, borderBottom: `1px solid ${C.border}` }}>
-        <div className="px-4 sm:px-6 lg:px-8 pt-3 pb-2 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 min-w-0">
+        <div className="suite-header-main px-4 sm:px-6 lg:px-8 pt-3 pb-2 flex items-center justify-between gap-3">
+          <div className="suite-brand flex items-center gap-3 min-w-0">
             <LogoBadge icon={Gem} color={C.ink} animKey={scaleAnimKey} />
-            <div className="min-w-0">
-              <div style={{ fontFamily: F_DISPLAY, fontWeight: 600, fontSize: 20, letterSpacing: 0.4 }} className="truncate">DECISION INTELLIGENCE SUITE</div>
-              <div style={{ fontFamily: F_MONO, fontSize: 10.5, color: C.inkMuted }} className="truncate">{COMPANY} · {DIVISION} · {DECISION_NAME}</div>
+            <div className="suite-brand-copy min-w-0">
+              <div style={{ fontFamily: F_DISPLAY, fontWeight: 600, fontSize: 20, letterSpacing: 0.4 }} className="suite-brand-title">
+                <span className="suite-title-short" aria-hidden="true">DIS</span>
+                <span>DECISION INTELLIGENCE SUITE</span>
+              </div>
+              <div style={{ fontFamily: F_MONO, fontSize: 10.5, color: C.inkMuted }} className="suite-brand-subtitle">{COMPANY} · {DIVISION} · {DECISION_NAME}</div>
             </div>
           </div>
-          <div className="shrink-0"><Stamp color={fragColor} framed onClick={() => setTab("trip")}>FRAGILITY: {derived.fragility}</Stamp></div>
+          <div className="suite-header-fragility shrink-0" title={derived.fragilityReasons.join(" ")}><Stamp color={fragColor} framed onClick={() => setTab("board")}>FRAGILITY: {derived.fragility}</Stamp></div>
         </div>
         <div className="px-4 sm:px-6 lg:px-8 flex overflow-x-auto" style={{ scrollbarWidth: "thin" }}>
           {TABS.map((t) => {
@@ -1352,7 +1385,7 @@ function App() {
       </header>
 
       <main className="p-4 sm:p-6 lg:p-8 max-w-4xl lg:max-w-5xl mx-auto">
-        {tab === "board" && <SituationBoard metrics={metrics} financialOptimumId={financialOptimumId} disqualified={disqualified} financialPct={derived.financialPct} robustPct={derived.robustPct} robustPctRaw={derived.robustPctRaw} fragility={derived.fragility} factors={factors} goTo={setTab} options={options} softContribution={derived.softContribution} />}
+        {tab === "board" && <SituationBoard metrics={metrics} financialOptimumId={financialOptimumId} disqualified={disqualified} financialPct={derived.financialPct} robustPct={derived.robustPct} robustPctRaw={derived.robustPctRaw} fragility={derived.fragility} fragilityReasons={derived.fragilityReasons} factors={factors} goTo={setTab} options={options} softContribution={derived.softContribution} />}
         {tab === "log" && <ScenarioLog scenarios={scenarios} setScenarios={markEdit(setScenarios)} options={options} />}
         {tab === "intel" && <FieldIntel factors={factors} setFactors={markEdit(setFactors)} onSave={saveAll} saveStatus={saveStatus} options={options} />}
         {tab === "trip" && <Tripwires scenarios={scenarios} metrics={metrics} constraintActive={constraintActive} serviceFloorPct={serviceFloorPct} coreCommitment={coreCommitment} goTo={setTab} qs={qsAllocation} setQs={markEdit(setQsAllocation)} onSaveQs={saveAll} qsSaveStatus={saveStatus} options={options} />}
