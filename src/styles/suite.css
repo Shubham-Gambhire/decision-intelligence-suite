@@ -76,7 +76,12 @@
 
     .suite-title-short { display: none; }
     .suite-brand-title { line-height: 1.2; }
-    .suite-company-note { width: fit-content; max-width: 40rem; margin-top: 0.35rem; padding: 0.35rem 0.5rem; border-left: 2px solid #4A3F6B; background: #F2F0F6; font-family: "Inter", sans-serif; font-size: 0.68rem; line-height: 1.4; color: #5A5668; }
+    .suite-company-note { width: fit-content; max-width: 40rem; margin-top: 0.25rem; padding-left: 0.45rem; border-left: 2px solid #4A3F6B; font-family: "Inter", sans-serif; font-size: 0.64rem; line-height: 1.35; color: #5A5668; }
+    .suite-tabs-shell { position: relative; border-top: 1px solid #E6E4ED; }
+    .suite-tabs-shell::after { content: ""; position: absolute; z-index: 2; top: 0; right: 0; bottom: 0; width: 1.75rem; pointer-events: none; background: linear-gradient(90deg, transparent, #F6F5F8 88%); }
+    .suite-tabs { scroll-snap-type: x proximity; scrollbar-width: none !important; }
+    .suite-tabs::-webkit-scrollbar { display: none; }
+    .suite-tab { min-height: 44px; scroll-snap-align: center; }
     .fragility-explainer { margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #E6E4ED; font-family: "Inter", sans-serif; font-size: 0.8rem; line-height: 1.55; color: #5A5668; }
     .fragility-explainer summary { width: fit-content; cursor: pointer; font-family: "JetBrains Mono", monospace; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
     .fragility-explainer p { margin: 0.6rem 0 0; max-width: 46rem; }
@@ -88,7 +93,8 @@
       .suite-brand-copy { flex: 1 1 auto; }
       .suite-brand-title { font-size: 16px !important; white-space: normal; }
       .suite-title-short { display: inline-block; margin-right: 0.5rem; padding-right: 0.5rem; border-right: 1px solid #D4D2DC; font-family: "JetBrains Mono", monospace; font-size: 0.65rem; letter-spacing: 0.08em; vertical-align: 0.1rem; }
-      .suite-company-note { margin-top: 0.4rem; font-size: 0.65rem; }
+      .suite-company-note { max-width: 19rem; }
+      .suite-tab { padding-left: 0.85rem; padding-right: 0.85rem; }
     }
 
     .transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
