@@ -142,3 +142,47 @@
     color: var(--color-foreground);
   }
 }
+
+/* Globally hide the Lovable badge */
+#lovable-badge,
+[id="lovable-badge"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Credit bar under the Decision Intelligence Suite */
+.credit-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1.25rem;
+  padding: 1rem 1.25rem 1.75rem;
+  background: #F6F5F8;
+  border-top: 1px solid #E6E4ED;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+.credit-text {
+  color: #5A5668;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
+.credit-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #4A3F6B;
+  text-decoration: none;
+  border: 1.5px solid #D4D2DC;
+  padding: 6px 12px;
+  background: #FFFFFF;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.credit-link:hover {
+  border-color: #4A3F6B;
+  color: #1E1C24;
+}
