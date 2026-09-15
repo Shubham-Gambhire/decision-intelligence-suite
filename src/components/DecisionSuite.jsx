@@ -1373,16 +1373,19 @@ function App() {
             </div>
           </div>
         </div>
-        <div className="px-4 sm:px-6 lg:px-8 flex overflow-x-auto" style={{ scrollbarWidth: "thin" }}>
+        <div className="suite-tabs-shell">
+          <div className="suite-tabs px-4 sm:px-6 lg:px-8 flex overflow-x-auto" style={{ scrollbarWidth: "thin" }}>
           {TABS.map((t) => {
             const IconComp = t.icon; const active = tab === t.key;
             return (
-              <button key={t.key} onClick={() => setTab(t.key)} className="flex items-center gap-1.5 px-3 py-2.5 whitespace-nowrap shrink-0"
+              <button key={t.key} onClick={(event) => { setTab(t.key); event.currentTarget.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" }); }} className="suite-tab flex items-center gap-1.5 px-3 whitespace-nowrap shrink-0"
+                aria-current={active ? "page" : undefined}
                 style={{ fontFamily: F_LABEL, letterSpacing: 0.5, fontSize: 12, background: "transparent", borderBottom: `2px solid ${active ? C.slate : "transparent"}`, borderRight: `1px solid ${C.borderSoft}`, color: active ? C.slate : C.inkMuted }}>
-                <IconComp size={13} /> {t.label.toUpperCase()}
+                <IconComp size={13} /> <span>{t.label.toUpperCase()}</span>
               </button>
             );
           })}
+          </div>
         </div>
         <div style={{ height: 3, backgroundImage: `repeating-linear-gradient(135deg, ${C.rust}66 0 6px, transparent 6px 12px)` }} />
       </header>
