@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Github } from "lucide-react";
 // @ts-expect-error - ported JSX module without type declarations
 import DecisionSuite from "@/components/DecisionSuite.jsx";
 import report from "@/assets/report.docx.asset.json";
@@ -41,6 +42,16 @@ function Index() {
             <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.71h.05c.53-.95 1.83-1.96 3.77-1.96C21.4 8.75 22 11.02 22 14.2V21h-4v-6.03c0-1.44-.03-3.3-2.01-3.3-2.01 0-2.32 1.57-2.32 3.19V21h-4V9Z" />
           </svg>
           LinkedIn
+        </a>
+        <a
+          className="credit-link credit-icon-link"
+          href="https://github.com/Shubham-Gambhire/decision-intelligence-suite"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View Decision Intelligence Suite on GitHub"
+          title="View on GitHub"
+        >
+          <Github aria-hidden="true" />
         </a>
         <a className="credit-link" href={report.url} download>
           Product Development Report (DOCX)
