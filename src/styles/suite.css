@@ -1,7 +1,7 @@
     * { box-sizing: border-box; }
     body { margin: 0; }
 
-    /* Minimal utility set (Tailwind-compatible names) — no CDN */
+    /* Minimal utility set (Tailwind-compatible names) - no CDN */
     .relative { position: relative; }
     .absolute { position: absolute; }
     .sticky { position: sticky; }

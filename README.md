@@ -6,13 +6,13 @@ A browser-based decision support workspace for comparing strategic options under
 
 ## What the suite does
 
-- **Situation Board** — summarizes the financial optimum, robustness-adjusted recommendation, scenario win rate, and decision fragility.
-- **Scenario Log** — captures scenario probabilities, triggers, and value outcomes for each option.
-- **Field Intelligence** — separates hard constraints, soft preferences, and contextual evidence so each affects the recommendation appropriately.
-- **Tripwires** — exposes downside thresholds and allocation breakpoints that can change the decision.
-- **Command Settings** — adjusts risk posture, strategic weighting, constraints, and option details.
-- **Field Manual** — explains the model and its intended interpretation.
-- **Portable workspace** — saves state locally and supports JSON import/export for scenario sharing and recovery.
+- **Situation Board** - summarizes the financial optimum, robustness-adjusted recommendation, scenario win rate, and decision fragility.
+- **Scenario Log** - captures scenario probabilities, triggers, and value outcomes for each option.
+- **Field Intelligence** - separates hard constraints, soft preferences, and contextual evidence so each affects the recommendation appropriately.
+- **Tripwires** - exposes downside thresholds and allocation breakpoints that can change the decision.
+- **Command Settings** - adjusts risk posture, strategic weighting, constraints, and option details.
+- **Field Manual** - explains the model and its intended interpretation.
+- **Portable workspace** - saves state locally and supports JSON import/export for scenario sharing and recovery.
 
 ## How the decision model works
 
@@ -24,9 +24,9 @@ The result is a **robustness-adjusted position**, not an automated decision. The
 
 Fragility indicates how easily the current recommendation could change when assumptions move. It is not a general measure of business risk.
 
-- **High** — the financial leader is disqualified, wins fewer than 55% of weighted scenarios, has an expected-value advantage below 5%, or the robustness position sits within 5 points of neutral.
-- **Medium** — no high-fragility trigger applies, but the leader wins fewer than 70% of weighted scenarios, its expected-value advantage is below 15%, or the robustness position is within 15 points of neutral.
-- **Low** — the leader clears all three stability tests and is not blocked by a hard constraint.
+- **High** - the financial leader is disqualified, wins fewer than 55% of weighted scenarios, has an expected-value advantage below 5%, or the robustness position sits within 5 points of neutral.
+- **Medium** - no high-fragility trigger applies, but the leader wins fewer than 70% of weighted scenarios, its expected-value advantage is below 15%, or the robustness position is within 15 points of neutral.
+- **Low** - the leader clears all three stability tests and is not blocked by a hard constraint.
 
 The indicator is useful as a review signal: high fragility means the recommendation deserves additional stress-testing, better evidence, or tighter tripwires before commitment.
 

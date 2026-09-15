@@ -32,7 +32,7 @@ const Download = (p) => <Icon {...p}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1
 const Upload = (p) => <Icon {...p}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></Icon>;
 
 /* ---------------------------------------------------------
-   DESIGN TOKENS — unchanged
+   DESIGN TOKENS - unchanged
 --------------------------------------------------------- */
 const C = {
   bg: "#F6F5F8",
@@ -55,7 +55,7 @@ const F_BODY = "'Inter', sans-serif";
 const F_MONO = "'JetBrains Mono', monospace";
 
 /* ---------------------------------------------------------
-   SCENARIO DATA — unchanged defaults
+   SCENARIO DATA - unchanged defaults
 --------------------------------------------------------- */
 const COMPANY = "Thistlewood Foods";
 const DIVISION = "Specialty Confections";
@@ -70,7 +70,7 @@ const DEFAULT_OPTIONS = [
 
 const DEFAULT_SCENARIOS = [
   { id: "base", name: "Base Case", probability: 25,
-    trigger: "Current plan assumptions hold — no material disruption to supply, logistics, or regulation.",
+    trigger: "Current plan assumptions hold - no material disruption to supply, logistics, or regulation.",
     values: { protect: 514.7, surge: 1686.5 } },
   { id: "rawmat", name: "Raw Material Shock", probability: 20,
     trigger: "A key input, sourced from two concentrated origins, faces a sudden shortfall and a spot-price spike.",
@@ -82,7 +82,7 @@ const DEFAULT_SCENARIOS = [
     trigger: "A cross-border rule restricts a specialty ingredient, forcing reformulation of several SKUs.",
     values: { protect: 501.3, surge: 349.8 } },
   { id: "compound", name: "Compound Shock", probability: 20,
-    trigger: "Raw Material Shock and Logistics Corridor Disruption occur together — the correlated case.",
+    trigger: "Raw Material Shock and Logistics Corridor Disruption occur together - the correlated case.",
     values: { protect: 276.5, surge: 142.1 } },
 ];
 
@@ -94,7 +94,7 @@ const DEFAULT_FACTORS = [
     evidence: "Two strategic distributors carry contractual minimum fill-rate clauses, with financial penalties for shortfall.",
     violates: { protect: false, surge: true }, active: false },
   { id: "f3", name: "Brand Momentum from Surge", type: "soft", impact: "Medium", confidence: "High", reversibility: "Partially reversible",
-    evidence: "Search and mention volume for the trend has held steady for three consecutive weeks — a stronger signal than a single viral spike, though the impact on sustained sales is still Medium rather than certain.",
+    evidence: "Search and mention volume for the trend has held steady for three consecutive weeks - a stronger signal than a single viral spike, though the impact on sustained sales is still Medium rather than certain.",
     favors: "surge" },
   { id: "f4", name: "Competitor Shelf-Space Capture", type: "contextual", impact: "High", confidence: "Medium", reversibility: "Irreversible",
     evidence: "If the surge window is missed, regional competitors are expected to fill the shelf space and keep it." },
@@ -119,9 +119,9 @@ const IMPACT_LEVELS = ["Low", "Medium", "High"];
 const CONF_LEVELS = ["Low", "Medium", "High"];
 const REV_LEVELS = ["Reversible", "Partially reversible", "Irreversible"];
 const TYPE_META = {
-  hard: { label: "Hard Constraint", color: C.rust, blurb: "Enters the math directly — can disqualify an option outright." },
+  hard: { label: "Hard Constraint", color: C.rust, blurb: "Enters the math directly - can disqualify an option outright." },
   soft: { label: "Soft Preference", color: C.amber, blurb: "Nudges the robustness-adjusted position, scaled by the Strategic Weight in Settings." },
-  contextual: { label: "Contextual", color: C.slate, blurb: "Displayed for judgment only — never enters the math." },
+  contextual: { label: "Contextual", color: C.slate, blurb: "Displayed for judgment only - never enters the math." },
 };
 
 function impactWeight(impact) { return impact === "High" ? 1 : impact === "Medium" ? 0.6 : 0.3; }
@@ -349,7 +349,7 @@ function validateImport(obj) {
 }
 
 /* ---------------------------------------------------------
-   UI PRIMITIVES — visual system preserved
+   UI PRIMITIVES - visual system preserved
 --------------------------------------------------------- */
 function BracketFrame({ children, style, accent = C.border, className = "" }) {
   const seg = (pos) => {
@@ -509,7 +509,7 @@ function PositionLine({ financialPct, robustPct, disqualified, protectLabel, sur
         {Array.from({ length: 11 }).map((_, i) => (
           <div key={i} className="absolute" style={{ left: `${i * 10}%`, top: 26, width: 1, height: 18, background: i === 5 ? C.inkFaint : C.borderSoft }} />
         ))}
-        {/* Financial optimum — hollow diamond, above track */}
+        {/* Financial optimum - hollow diamond, above track */}
         <div className="absolute transition-all duration-300 ease-out flex flex-col items-center" style={{ left: `${finLeft}%`, top: 0, transform: "translateX(-50%)" }} title="Financial optimum (pure expected value)">
           <div style={{ width: 14, height: 14, transform: "rotate(45deg)", background: C.panel, border: `2.5px solid ${C.ink}`, boxShadow: "0 0 0 1px " + C.panel }} />
           <div style={{ width: 2, height: 10, background: C.ink, marginTop: -1 }} />
@@ -518,7 +518,7 @@ function PositionLine({ financialPct, robustPct, disqualified, protectLabel, sur
         <div className="absolute flex items-center justify-center" style={{ left: "50%", top: 14, transform: "translateX(-50%)" }}>
           <span style={{ fontFamily: F_MONO, fontSize: 10, color: C.inkMuted, background: C.panel, padding: "1px 6px", border: `1px solid ${C.borderSoft}`, whiteSpace: "nowrap" }}>Δ {gap.toFixed(0)} pt</span>
         </div>
-        {/* Robustness-adjusted — solid flag, below track */}
+        {/* Robustness-adjusted - solid flag, below track */}
         {!bothDisqualified && (
           <div className="absolute transition-all duration-300 ease-out flex flex-col items-center" style={{ left: `${robLeft}%`, top: 38, transform: "translateX(-50%)" }} title="Robustness-adjusted position">
             <div style={{ width: 2, height: 10, background: disqualified ? C.rust : C.slate }} />
@@ -580,7 +580,7 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
 
   return (
     <div className="flex flex-col gap-5">
-      {/* PRIMARY RECOMMENDATION — the "so what" */}
+      {/* PRIMARY RECOMMENDATION - the "so what" */}
       <BracketFrame style={{ padding: 20 }} accent={bothDisqualified ? C.rust : C.slate}>
         <div className="flex items-start justify-between flex-wrap gap-3 mb-3">
           <Eyebrow color={bothDisqualified ? C.rust : C.slate}>Primary recommendation</Eyebrow>
@@ -598,7 +598,7 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
         ) : (
           <div>
             <div style={{ fontFamily: F_DISPLAY, fontSize: 22, color: C.ink, letterSpacing: 0.3, lineHeight: 1.25 }}>
-              {recommended?.name || "—"}
+              {recommended?.name || "-"}
             </div>
             <p style={{ fontFamily: F_BODY, fontSize: 14, color: C.inkMuted, lineHeight: 1.55, marginTop: 6, maxWidth: 640 }}>{rationale}</p>
           </div>
@@ -619,7 +619,7 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
         <div className="flex flex-wrap gap-4 mt-4 pt-3" style={{ borderTop: `1px solid ${C.borderSoft}` }}>
           <div>
             <div style={{ fontFamily: F_MONO, fontSize: 10, color: C.inkFaint, letterSpacing: 1 }}>FINANCIAL OPTIMUM</div>
-            <div style={{ fontFamily: F_MONO, fontSize: 15, fontWeight: 600, color: C.ink }}>{leader?.short || "—"}</div>
+            <div style={{ fontFamily: F_MONO, fontSize: 15, fontWeight: 600, color: C.ink }}>{leader?.short || "-"}</div>
           </div>
           <div>
             <div style={{ fontFamily: F_MONO, fontSize: 10, color: C.inkFaint, letterSpacing: 1 }}>EXPECTED ADVANTAGE</div>
@@ -628,7 +628,7 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
           <div>
             <div style={{ fontFamily: F_MONO, fontSize: 10, color: C.inkFaint, letterSpacing: 1 }}>ROBUSTNESS LEAN</div>
             <div style={{ fontFamily: F_MONO, fontSize: 15, fontWeight: 600, color: bothDisqualified || anyDisqualified ? C.rust : C.slate }}>
-              {bothDisqualified ? "NONE" : anyDisqualified ? "OVERRIDDEN" : `${robustPctRaw}% → ${robustLeader?.short || "—"}`}
+              {bothDisqualified ? "NONE" : anyDisqualified ? "OVERRIDDEN" : `${robustPctRaw}% → ${robustLeader?.short || "-"}`}
             </div>
           </div>
           <div>
@@ -653,7 +653,7 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
         </div>
       </BracketFrame>
 
-      {/* Option comparison — equal structure, winner highlight */}
+      {/* Option comparison - equal structure, winner highlight */}
       <div className="grid sm:grid-cols-2 gap-4">
         {options.map((o) => {
           const m = metrics[o.id] || { ev: 0, winProb: 0, worst: 0, worstRegret: 0 };
@@ -687,7 +687,7 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
         })}
       </div>
 
-      {/* Flagged factors — tighter */}
+      {/* Flagged factors - tighter */}
       <BracketFrame style={{ padding: 16 }}>
         <div className="flex items-center justify-between mb-1">
           <Eyebrow>Key factors</Eyebrow>
@@ -750,7 +750,7 @@ function ScenarioLog({ scenarios, setScenarios, options }) {
       <BracketFrame style={{ padding: 14 }}>
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.5, maxWidth: 620 }}>
-            This is the MILP's output, not a live solver — each row is a scenario with a value already computed for each option. Edit freely; every other tab recalculates from this table.
+            This is the MILP's output, not a live solver - each row is a scenario with a value already computed for each option. Edit freely; every other tab recalculates from this table.
           </div>
           <Stamp color={probWarning ? C.amber : C.moss} framed>SUM: {totalProb.toFixed(0)}%</Stamp>
         </div>
@@ -765,7 +765,7 @@ function ScenarioLog({ scenarios, setScenarios, options }) {
         {scenarios.length === 0 && (
           <BracketFrame style={{ padding: 24, textAlign: "center" }}>
             <div style={{ fontFamily: F_LABEL, fontSize: 14, letterSpacing: 0.5, color: C.inkMuted }}>No scenarios logged</div>
-            <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkFaint, lineHeight: 1.5 }} className="mt-1">Nothing to compare yet — every metric on Overview and Tripwires depends on at least one row here. Add one below.</p>
+            <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkFaint, lineHeight: 1.5 }} className="mt-1">Nothing to compare yet - every metric on Overview and Tripwires depends on at least one row here. Add one below.</p>
           </BracketFrame>
         )}
         {scenarios.map((s) => (
@@ -825,9 +825,9 @@ function FieldIntel({ factors, setFactors, onSave, saveStatus, options }) {
       <BracketFrame style={{ padding: 14 }}>
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.5, maxWidth: 560 }}>
-            <span style={{ color: C.ink, fontWeight: 600 }}>Not every risk can be priced.</span> This is where judgment calls get written down instead of guessed at. Three ways a factor can enter the picture — set with the <strong style={{ color: C.ink }}>Type</strong> field on each card:{" "}
+            <span style={{ color: C.ink, fontWeight: 600 }}>Not every risk can be priced.</span> This is where judgment calls get written down instead of guessed at. Three ways a factor can enter the picture - set with the <strong style={{ color: C.ink }}>Type</strong> field on each card:{" "}
             <span style={{ color: C.rust }}>Hard constraints</span> can disqualify an option outright when active.{" "}
-            <span style={{ color: C.amber }}>Soft preferences</span> nudge the recommendation by a weight you control in Settings — Impact, Confidence and Reversibility all scale how strongly.{" "}
+            <span style={{ color: C.amber }}>Soft preferences</span> nudge the recommendation by a weight you control in Settings - Impact, Confidence and Reversibility all scale how strongly.{" "}
             <span style={{ color: C.slate }}>Contextual</span> factors are shown for judgment and never touch the math.
           </div>
           <SaveButton onClick={onSave} status={saveStatus} />
@@ -883,7 +883,7 @@ function FieldIntel({ factors, setFactors, onSave, saveStatus, options }) {
                     <input type="checkbox" checked={!!f.violates?.[o.id]} onChange={(e) => updateViolates(f.id, o.id, e.target.checked)} /> {o.short}
                   </label>
                 ))}
-                <span style={{ fontFamily: F_BODY, fontSize: 11, color: C.inkFaint, fontStyle: "italic" }}>Impact/Confidence don't change this — a hard constraint is a veto, not a matter of degree.</span>
+                <span style={{ fontFamily: F_BODY, fontSize: 11, color: C.inkFaint, fontStyle: "italic" }}>Impact/Confidence don't change this - a hard constraint is a veto, not a matter of degree.</span>
               </div>
             )}
             {f.type === "soft" && (
@@ -964,7 +964,7 @@ function Tripwires({ scenarios, metrics, constraintActive, serviceFloorPct, core
 
       <BracketFrame style={{ padding: 16 }}>
         <div className="flex items-start justify-between gap-3 flex-wrap">
-          <Eyebrow>Continuous tripwire — Base Case allocation</Eyebrow>
+          <Eyebrow>Continuous tripwire - Base Case allocation</Eyebrow>
           <SaveButton onClick={onSaveQs} status={qsSaveStatus} />
         </div>
         <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.5 }} className="mt-2 mb-4">
@@ -977,21 +977,21 @@ function Tripwires({ scenarios, metrics, constraintActive, serviceFloorPct, core
           { label: "CORE SERVICE", value: `${servicePct.toFixed(1)}%`, color: constraintActive && servicePct < serviceFloorPct - 0.5 ? C.rust : C.ink },
           { label: "NET VALUE", value: `₹${nev.toFixed(0)}CR`, color: C.amber },
         ]} />
-        <div style={{ fontFamily: F_MONO, fontSize: 10, color: C.inkFaint }} className="mt-2">Saves to this browser. This is illustrative only — it doesn't feed back into the Overview recommendation, which is driven by the Scenario Log.</div>
+        <div style={{ fontFamily: F_MONO, fontSize: 10, color: C.inkFaint }} className="mt-2">Saves to this browser. This is illustrative only - it doesn't feed back into the Overview recommendation, which is driven by the Scenario Log.</div>
         {qs > capQs && (
           <div className="flex items-start gap-2 mt-3 p-3" style={{ borderLeft: `3px solid ${C.rust}`, background: C.panelRaised }}>
             <AlertTriangle size={14} color={C.rust} className="mt-0.5 shrink-0" />
             <p style={{ fontFamily: F_BODY, fontSize: 12, color: C.ink, lineHeight: 1.5 }}>
-              Capped at {capQs.toLocaleString()} MT by the active Core Service Floor constraint — going further would breach the {serviceFloorPct}% floor. Enforcing it costs an estimated <strong>₹{foregone.toFixed(1)} Cr</strong> versus the unconstrained maximum.
+              Capped at {capQs.toLocaleString()} MT by the active Core Service Floor constraint - going further would breach the {serviceFloorPct}% floor. Enforcing it costs an estimated <strong>₹{foregone.toFixed(1)} Cr</strong> versus the unconstrained maximum.
             </p>
           </div>
         )}
       </BracketFrame>
 
       <BracketFrame style={{ padding: 16 }}>
-        <Eyebrow>Discrete tripwires — scenario-driven flips</Eyebrow>
+        <Eyebrow>Discrete tripwires - scenario-driven flips</Eyebrow>
         <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.5 }} className="mt-2 mb-3">
-          No formula links these scenarios to a value — each is a separate MILP re-run. A flip here means the scenario itself, not a sliding number, changes which option wins.
+          No formula links these scenarios to a value - each is a separate MILP re-run. A flip here means the scenario itself, not a sliding number, changes which option wins.
         </p>
         <div className="flex flex-col">
           {scenarios.filter((s) => s.id !== "base").map((s, i) => {
@@ -1047,7 +1047,7 @@ function CommandSettings({ riskPosture, setRiskPosture, softWeight, setSoftWeigh
           <SaveButton onClick={onSave} status={saveStatus} />
         </div>
         <p style={{ fontFamily: F_BODY, fontSize: 12, color: C.inkMuted, lineHeight: 1.5 }} className="mb-3">
-          Rename the two options being compared to fit your own decision. This covers every label across the tool — Position Line, Scenario Log, Qualitative Factors, and Tripwires all read from here.
+          Rename the two options being compared to fit your own decision. This covers every label across the tool - Position Line, Scenario Log, Qualitative Factors, and Tripwires all read from here.
         </p>
         <div className="grid sm:grid-cols-2 gap-3">
           {options.map((o) => (
@@ -1059,7 +1059,7 @@ function CommandSettings({ riskPosture, setRiskPosture, softWeight, setSoftWeigh
             </div>
           ))}
         </div>
-        <div style={{ fontFamily: F_MONO, fontSize: 10, color: C.inkFaint }} className="mt-2">The internal roles (which one is "protect", which is "surge") stay fixed — only the labels shown throughout the tool change.</div>
+        <div style={{ fontFamily: F_MONO, fontSize: 10, color: C.inkFaint }} className="mt-2">The internal roles (which one is "protect", which is "surge") stay fixed - only the labels shown throughout the tool change.</div>
       </BracketFrame>
 
       <BracketFrame style={{ padding: 16 }}>
@@ -1099,7 +1099,7 @@ function CommandSettings({ riskPosture, setRiskPosture, softWeight, setSoftWeigh
       <BracketFrame style={{ padding: 16 }}>
         <Eyebrow>Core service floor</Eyebrow>
         <p style={{ fontFamily: F_BODY, fontSize: 12, color: C.inkMuted, lineHeight: 1.5 }} className="mt-2 mb-3">
-          The one numeric, formula-enforced constraint in this tool — caps the Qs slider on the Tripwires tab. Everything else in Qualitative Factors is a manual judgment call by design.
+          The one numeric, formula-enforced constraint in this tool - caps the Qs slider on the Tripwires tab. Everything else in Qualitative Factors is a manual judgment call by design.
         </p>
         <div className="flex flex-col gap-3">
           <label className="flex items-center gap-2" style={{ fontFamily: F_BODY, fontSize: 13, color: C.ink }}>
@@ -1146,7 +1146,7 @@ function FieldManual() {
       <BracketFrame style={{ padding: 18 }}>
         <div className="flex items-center gap-2 mb-3"><IconBadge icon={Target} color={C.rust} /><h3 style={{ fontFamily: F_LABEL, fontSize: 16, color: C.ink, letterSpacing: 0.5 }}>What this tool is for</h3></div>
         <p style={{ fontFamily: F_BODY, fontSize: 13, color: C.inkMuted, lineHeight: 1.65 }}>
-          A mathematically optimal decision and a robust one are not always the same decision. Decision Intelligence Suite takes an optimizer's output — a value per option, per scenario — and asks whether that optimum survives contact with uncertainty, hard constraints, and factors nobody can honestly price in dollars. It does not run an optimizer itself. The Scenario Log is where that output gets typed in, exactly the way a stock-ageing report gets typed into a spreadsheet.
+          A mathematically optimal decision and a robust one are not always the same decision. Decision Intelligence Suite takes an optimizer's output - a value per option, per scenario - and asks whether that optimum survives contact with uncertainty, hard constraints, and factors nobody can honestly price in dollars. It does not run an optimizer itself. The Scenario Log is where that output gets typed in, exactly the way a stock-ageing report gets typed into a spreadsheet.
         </p>
       </BracketFrame>
 
@@ -1155,15 +1155,15 @@ function FieldManual() {
         <div className="flex flex-col">
           <div className="py-3" style={{ borderLeft: `3px solid ${C.moss}`, paddingLeft: 12 }}>
             <div style={{ fontFamily: F_BODY, fontWeight: 600, fontSize: 13, color: C.moss }} className="mb-1">Real, computed live</div>
-            <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.6 }}>Expected value, scenario win rate (ties split probability mass equally), worst-case value, worst-case regret — all computed directly from the Scenario Log. Soft-factor scoring multiplies Impact × Confidence × Reversibility weights. The Base Case allocation formula (Qs slider on Tripwires) reproduces both named endpoints exactly (₹514.7 Cr at Qs=0, ₹1,686.5 Cr at Qs=5,500); everything between is linear interpolation, not invention.</p>
+            <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.6 }}>Expected value, scenario win rate (ties split probability mass equally), worst-case value, worst-case regret - all computed directly from the Scenario Log. Soft-factor scoring multiplies Impact × Confidence × Reversibility weights. The Base Case allocation formula (Qs slider on Tripwires) reproduces both named endpoints exactly (₹514.7 Cr at Qs=0, ₹1,686.5 Cr at Qs=5,500); everything between is linear interpolation, not invention.</p>
           </div>
           <div className="py-3 mt-2" style={{ borderTop: `1px solid ${C.borderSoft}`, borderLeft: `3px solid ${C.amber}`, paddingLeft: 12 }}>
             <div style={{ fontFamily: F_BODY, fontWeight: 600, fontSize: 13, color: C.amber }} className="mb-1">Illustrative, not derived</div>
-            <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.6 }}>The four non-base scenarios and their values are fictional. The four scenario tripwires are discrete lookups, not derived from a continuous variable — a slider there would imply precision that doesn't exist.</p>
+            <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.6 }}>The four non-base scenarios and their values are fictional. The four scenario tripwires are discrete lookups, not derived from a continuous variable - a slider there would imply precision that doesn't exist.</p>
           </div>
           <div className="py-3 mt-2" style={{ borderTop: `1px solid ${C.borderSoft}`, borderLeft: `3px solid ${C.rust}`, paddingLeft: 12 }}>
             <div style={{ fontFamily: F_BODY, fontWeight: 600, fontSize: 13, color: C.rust }} className="mb-1">Deliberately manual, not automated</div>
-            <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.6 }}>Every impact / confidence / reversibility tag in Qualitative Factors is typed in by a person, on purpose. Having software silently assign "High impact" to retailer trust would just relocate the black box, not remove it. The weight each level carries is a ranking, not a valuation — it's deliberately never converted into ₹, and it's capped so it can only ever nudge the recommendation, never override the financial numbers on its own. Only an active hard constraint can do that.</p>
+            <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.6 }}>Every impact / confidence / reversibility tag in Qualitative Factors is typed in by a person, on purpose. Having software silently assign "High impact" to retailer trust would just relocate the black box, not remove it. The weight each level carries is a ranking, not a valuation - it's deliberately never converted into ₹, and it's capped so it can only ever nudge the recommendation, never override the financial numbers on its own. Only an active hard constraint can do that.</p>
           </div>
         </div>
       </BracketFrame>
@@ -1171,8 +1171,8 @@ function FieldManual() {
       <BracketFrame style={{ padding: 18 }}>
         <div className="flex items-center gap-2 mb-3"><IconBadge icon={ScrollText} color={C.amber} /><h3 style={{ fontFamily: F_LABEL, fontSize: 16, color: C.ink, letterSpacing: 0.5 }}>What it deliberately does not do</h3></div>
         <ul style={{ fontFamily: F_BODY, fontSize: 13, color: C.inkMuted, lineHeight: 1.9 }} className="list-disc pl-5">
-          <li>It does not run or replace an optimizer — the Scenario Log is an input surface, not a solver.</li>
-          <li>It does not convert goodwill, trust, or brand equity into ₹ — that's precisely what the qualitative-factor typing is for.</li>
+          <li>It does not run or replace an optimizer - the Scenario Log is an input surface, not a solver.</li>
+          <li>It does not convert goodwill, trust, or brand equity into ₹ - that's precisely what the qualitative-factor typing is for.</li>
           <li>It does not collapse robustness into one black-box score. Win rate, worst-case value, and worst-case regret are shown separately because they can disagree.</li>
           <li>It does not use AI to assign impact, confidence, or reversibility scores. Those stay a named person's call, on record.</li>
         </ul>
@@ -1181,16 +1181,16 @@ function FieldManual() {
       <BracketFrame style={{ padding: 18 }}>
         <div className="flex items-center gap-2 mb-3"><IconBadge icon={HelpCircle} color={C.slate} /><h3 style={{ fontFamily: F_LABEL, fontSize: 16, color: C.ink, letterSpacing: 0.5 }}>Isn't scoring a factor still quantifying it?</h3></div>
         <p style={{ fontFamily: F_BODY, fontSize: 13, color: C.ink, lineHeight: 1.65 }} className="mb-4">
-          Yes — technically, it is a form of quantification. Assigning weights to a factor and multiplying it into a formula puts a number on something qualitative. Pretending otherwise would undercut the credibility this tool depends on. The distinction that actually matters isn't numbers versus no numbers — it's what kind of number, and what it's allowed to do.
+          Yes - technically, it is a form of quantification. Assigning weights to a factor and multiplying it into a formula puts a number on something qualitative. Pretending otherwise would undercut the credibility this tool depends on. The distinction that actually matters isn't numbers versus no numbers - it's what kind of number, and what it's allowed to do.
         </p>
         <div className="flex flex-col">
           <div className="py-3" style={{ borderLeft: `3px solid ${C.moss}`, paddingLeft: 12 }}>
             <div style={{ fontFamily: F_BODY, fontWeight: 600, fontSize: 13, color: C.moss }} className="mb-1">Ordinal, not cardinal</div>
-            <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.6 }}>The weight scale is a ranking — count this for more than that — not a valuation. It never claims a factor is "worth ₹150 Cr." Converting to ₹ would make a far stronger, far less defensible claim: an exact magnitude, in the same unit as real revenue.</p>
+            <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.6 }}>The weight scale is a ranking - count this for more than that - not a valuation. It never claims a factor is "worth ₹150 Cr." Converting to ₹ would make a far stronger, far less defensible claim: an exact magnitude, in the same unit as real revenue.</p>
           </div>
           <div className="py-3 mt-2" style={{ borderTop: `1px solid ${C.borderSoft}`, borderLeft: `3px solid ${C.amber}`, paddingLeft: 12 }}>
             <div style={{ fontFamily: F_BODY, fontWeight: 600, fontSize: 13, color: C.amber }} className="mb-1">Structurally capped</div>
-            <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.6 }}>The soft-preference term is bounded to at most a 30% share of the tilt, no matter how many factors are stacked or how high the Strategic Weight is set. It can nudge the recommendation but never outvote the real financial data. A dollar figure folded into an objective function has no such ceiling — it could flip the recommendation on its own.</p>
+            <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.6 }}>The soft-preference term is bounded to at most a 30% share of the tilt, no matter how many factors are stacked or how high the Strategic Weight is set. It can nudge the recommendation but never outvote the real financial data. A dollar figure folded into an objective function has no such ceiling - it could flip the recommendation on its own.</p>
           </div>
           <div className="py-3 mt-2" style={{ borderTop: `1px solid ${C.borderSoft}`, borderLeft: `3px solid ${C.rust}`, paddingLeft: 12 }}>
             <div style={{ fontFamily: F_BODY, fontWeight: 600, fontSize: 13, color: C.rust }} className="mb-1">Never merged into one number</div>
@@ -1198,11 +1198,11 @@ function FieldManual() {
           </div>
           <div className="py-3 mt-2" style={{ borderTop: `1px solid ${C.borderSoft}`, borderLeft: `3px solid ${C.slate}`, paddingLeft: 12 }}>
             <div style={{ fontFamily: F_BODY, fontWeight: 600, fontSize: 13, color: C.slate }} className="mb-1">A veto, not a price</div>
-            <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.6 }}>Disqualifying an option via a hard constraint isn't "this factor is worth negative infinity dollars" — it's a categorical "this option is off the table." That's handled in the code as a boolean override, not a number in a sum.</p>
+            <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.6 }}>Disqualifying an option via a hard constraint isn't "this factor is worth negative infinity dollars" - it's a categorical "this option is off the table." That's handled in the code as a boolean override, not a number in a sum.</p>
           </div>
         </div>
         <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.6 }} className="mt-4">
-          So the honest claim isn't that qualitative factors stay untouched by numbers — it's that the numbers touching them are ordinal, bounded, kept visibly separate, and overridable by you at every step. That's a narrower, more defensible claim than "we don't quantify qualitative factors," and it's the one this tool actually makes.
+          So the honest claim isn't that qualitative factors stay untouched by numbers - it's that the numbers touching them are ordinal, bounded, kept visibly separate, and overridable by you at every step. That's a narrower, more defensible claim than "we don't quantify qualitative factors," and it's the one this tool actually makes.
         </p>
       </BracketFrame>
 
