@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Github } from "lucide-react";
 // @ts-expect-error - ported JSX module without type declarations
 import DecisionSuite from "@/components/DecisionSuite.jsx";
-import report from "@/assets/report.docx.asset.json";
+import report from "@/assets/report.pdf.asset.json";
 
 export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
@@ -57,7 +57,7 @@ function Index() {
           <Github aria-hidden="true" />
         </a>
         <a className="credit-link" href={report.url} download>
-          Product Development Report (DOCX)
+          Product Development Report (PDF)
         </a>
       </div>
     </>
