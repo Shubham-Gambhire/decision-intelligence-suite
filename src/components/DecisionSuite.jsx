@@ -677,7 +677,7 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
                   { label: "WORST VALUE", value: `₹${m.worst.toFixed(0)} Cr` },
                   { label: "WORST REGRET", value: `₹${m.worstRegret.toFixed(0)} Cr` },
                 ].map((cell) => (
-                  <div key={cell.label} style={{ background: C.panel, padding: "10px 12px" }}>
+                  <div key={cell.label} style={{ background: "transparent", padding: "12px 14px" }}>
                     <div style={{ fontFamily: F_MONO, fontSize: 9.5, color: C.inkFaint, letterSpacing: 0.8 }}>{cell.label}</div>
                     <div style={{ fontFamily: F_MONO, fontSize: 16, fontWeight: 600, color: C.ink, marginTop: 2 }}>{cell.value}</div>
                   </div>
@@ -748,7 +748,7 @@ function ScenarioLog({ scenarios, setScenarios, options }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <BracketFrame style={{ padding: 14 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.5, maxWidth: 620 }}>
             This is the MILP's output, not a live solver - each row is a scenario with a value already computed for each option. Edit freely; every other tab recalculates from this table.
@@ -823,7 +823,7 @@ function FieldIntel({ factors, setFactors, onSave, saveStatus, options }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <BracketFrame style={{ padding: 14 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.5, maxWidth: 560 }}>
             <span style={{ color: C.ink, fontWeight: 600 }}>Not every risk can be priced.</span> This is where judgment calls get written down instead of guessed at. Three ways a factor can enter the picture - set with the <strong style={{ color: C.ink }}>Type</strong> field on each card:{" "}
@@ -844,7 +844,7 @@ function FieldIntel({ factors, setFactors, onSave, saveStatus, options }) {
           </BracketFrame>
         )}
         {factors.map((f) => (
-          <BracketFrame key={f.id} style={{ padding: 16, opacity: f.type === "hard" && !f.active ? 0.72 : 1 }} accent={f.type === "hard" && f.active ? C.rust : TYPE_META[f.type].color}>
+          <BracketFrame key={f.id} style={{ padding: 24, opacity: f.type === "hard" && !f.active ? 0.72 : 1 }} accent={f.type === "hard" && f.active ? C.rust : TYPE_META[f.type].color}>
             <div className="flex items-start justify-between gap-3 flex-wrap mb-3">
               <input value={f.name} onChange={(e) => update(f.id, "name", e.target.value)} style={fldBody({ fontWeight: 600, fontSize: 14, flex: "1 1 200px", background: "transparent", border: "none", padding: "2px 0" })} />
               <div className="flex items-center gap-2">
@@ -926,7 +926,7 @@ function Tripwires({ scenarios, metrics, constraintActive, serviceFloorPct, core
         This tab stress-tests the recommendation: how often each option actually wins, how bad its worst case is, and exactly what would need to change for the recommendation to flip.
       </Intro>
 
-      <BracketFrame style={{ padding: 16 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <Eyebrow>Robustness metrics</Eyebrow>
         <div className="overflow-x-auto mt-3">
           <table className="w-full text-sm" style={{ fontFamily: F_BODY }}>
@@ -963,7 +963,7 @@ function Tripwires({ scenarios, metrics, constraintActive, serviceFloorPct, core
         </div>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 16 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <Eyebrow>Continuous tripwire - Base Case allocation</Eyebrow>
           <SaveButton onClick={onSaveQs} status={qsSaveStatus} />
@@ -989,7 +989,7 @@ function Tripwires({ scenarios, metrics, constraintActive, serviceFloorPct, core
         )}
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 16 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <Eyebrow>Discrete tripwires - scenario-driven flips</Eyebrow>
         <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.5 }} className="mt-2 mb-3">
           No formula links these scenarios to a value - each is a separate MILP re-run. A flip here means the scenario itself, not a sliding number, changes which option wins.
@@ -1042,7 +1042,7 @@ function CommandSettings({ riskPosture, setRiskPosture, softWeight, setSoftWeigh
 
   return (
     <div className="flex flex-col gap-5">
-      <BracketFrame style={{ padding: 16 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-start justify-between gap-3 flex-wrap mb-2">
           <Eyebrow>Decision options</Eyebrow>
           <SaveButton onClick={onSave} status={saveStatus} />
@@ -1063,7 +1063,7 @@ function CommandSettings({ riskPosture, setRiskPosture, softWeight, setSoftWeigh
         <div style={{ fontFamily: F_MONO, fontSize: 10, color: C.inkFaint }} className="mt-2">The internal roles (which one is "protect", which is "surge") stay fixed - only the labels shown throughout the tool change.</div>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 16 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-center justify-between mb-4">
           <Eyebrow>Adjustments</Eyebrow>
           <button onClick={onReset} className="flex items-center gap-1.5 px-3 py-1.5" style={{ fontFamily: F_MONO, fontSize: 11, color: C.inkMuted, border: `1px solid ${C.border}` }}>
@@ -1097,7 +1097,7 @@ function CommandSettings({ riskPosture, setRiskPosture, softWeight, setSoftWeigh
         </div>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 16 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <Eyebrow>Core service floor</Eyebrow>
         <p style={{ fontFamily: F_BODY, fontSize: 12, color: C.inkMuted, lineHeight: 1.5 }} className="mt-2 mb-3">
           The one numeric, formula-enforced constraint in this tool - caps the Qs slider on the Tripwires tab. Everything else in Qualitative Factors is a manual judgment call by design.
@@ -1119,7 +1119,7 @@ function CommandSettings({ riskPosture, setRiskPosture, softWeight, setSoftWeigh
         </div>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 16 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <Eyebrow>Export / Import</Eyebrow>
         <p style={{ fontFamily: F_BODY, fontSize: 12, color: C.inkMuted, lineHeight: 1.5 }} className="mt-2 mb-3">
           Download the full decision package (scenarios, factors, settings, options) as JSON, or restore one previously exported. Import validates shape and falls back gracefully on bad data.
@@ -1144,14 +1144,14 @@ function CommandSettings({ riskPosture, setRiskPosture, softWeight, setSoftWeigh
 function FieldManual() {
   return (
     <div className="flex flex-col gap-5">
-      <BracketFrame style={{ padding: 18 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-center gap-2 mb-3"><IconBadge icon={Target} color={C.rust} /><h3 style={{ fontFamily: F_LABEL, fontSize: 16, color: C.ink, letterSpacing: 0.5 }}>What this tool is for</h3></div>
         <p style={{ fontFamily: F_BODY, fontSize: 13, color: C.inkMuted, lineHeight: 1.65 }}>
           A mathematically optimal decision and a robust one are not always the same decision. Decision Intelligence Suite takes an optimizer's output - a value per option, per scenario - and asks whether that optimum survives contact with uncertainty, hard constraints, and factors nobody can honestly price in dollars. It does not run an optimizer itself. The Scenario Log is where that output gets typed in, exactly the way a stock-ageing report gets typed into a spreadsheet.
         </p>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 18 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-center gap-2 mb-3"><IconBadge icon={Compass} color={C.slate} /><h3 style={{ fontFamily: F_LABEL, fontSize: 16, color: C.ink, letterSpacing: 0.5 }}>What's real math vs. illustrative</h3></div>
         <div className="flex flex-col">
           <div className="py-3" style={{ borderLeft: `3px solid ${C.moss}`, paddingLeft: 12 }}>
@@ -1169,7 +1169,7 @@ function FieldManual() {
         </div>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 18 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-center gap-2 mb-3"><IconBadge icon={ScrollText} color={C.amber} /><h3 style={{ fontFamily: F_LABEL, fontSize: 16, color: C.ink, letterSpacing: 0.5 }}>What it deliberately does not do</h3></div>
         <ul style={{ fontFamily: F_BODY, fontSize: 13, color: C.inkMuted, lineHeight: 1.9 }} className="list-disc pl-5">
           <li>It does not run or replace an optimizer - the Scenario Log is an input surface, not a solver.</li>
@@ -1179,7 +1179,7 @@ function FieldManual() {
         </ul>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 18 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-center gap-2 mb-3"><IconBadge icon={HelpCircle} color={C.slate} /><h3 style={{ fontFamily: F_LABEL, fontSize: 16, color: C.ink, letterSpacing: 0.5 }}>Isn't scoring a factor still quantifying it?</h3></div>
         <p style={{ fontFamily: F_BODY, fontSize: 13, color: C.ink, lineHeight: 1.65 }} className="mb-4">
           Yes - technically, it is a form of quantification. Assigning weights to a factor and multiplying it into a formula puts a number on something qualitative. Pretending otherwise would undercut the credibility this tool depends on. The distinction that actually matters isn't numbers versus no numbers - it's what kind of number, and what it's allowed to do.
@@ -1207,7 +1207,7 @@ function FieldManual() {
         </p>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 18 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-center gap-2 mb-3"><IconBadge icon={Info} color={C.inkMuted} /><h3 style={{ fontFamily: F_LABEL, fontSize: 16, color: C.ink, letterSpacing: 0.5 }}>Provenance & persistence</h3></div>
         <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.6 }}>
           Thistlewood Foods, its Specialty Confections division, and every named scenario in this prototype are fictional. The two base-case endpoint values and the capacity-allocation formula carry over the numeric structure from a supply-chain case exercise; nothing here corresponds to any real company's figures. Full decision state (scenarios, factors, settings, options) is persisted to the browser's localStorage and can be exported/imported as JSON.
@@ -1332,13 +1332,11 @@ function App() {
     setQsAllocation(MAX_SURGE);
   };
 
-  const fragColor = derived.fragility === "HIGH" ? C.rust : derived.fragility === "MEDIUM" ? C.amber : C.moss;
-
-  return (
+    return (
     <div style={{ background: C.bg, minHeight: "100vh", color: C.ink }}>
       <style>{`
         * { box-sizing: border-box; }
-        input:focus-visible, select:focus-visible, button:focus-visible, textarea:focus-visible { outline: 2px solid ${C.rust}; outline-offset: 1px; }
+        input:focus-visible, select:focus-visible, button:focus-visible, textarea:focus-visible { outline: 2px solid ${C.slate}; outline-offset: 1px; }
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-thumb { background: ${C.border}; }
         @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
