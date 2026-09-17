@@ -70,7 +70,7 @@ Decision data is stored in the browser's local storage. It is not sent to an app
 
 ## Project resources
 
-- [Product Development Report](src/assets/report.docx.asset.json)
+- [Product Development Report](src/assets/report.pdf.asset.json)
 - [GitHub repository](https://github.com/Shubham-Gambhire/decision-intelligence-suite)
 
 ## Author
