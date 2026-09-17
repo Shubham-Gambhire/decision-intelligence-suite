@@ -90,7 +90,10 @@
 
     .suite-title-short { display: none; }
     .suite-brand-title { line-height: 1.2; }
-    .suite-company-note { width: fit-content; max-width: 40rem; margin-top: 0.25rem; padding-left: 0.45rem; border-left: 2px solid var(--suite-accent); font-family: "Inter", sans-serif; font-size: 0.64rem; line-height: 1.35; color: var(--suite-ink-muted); }
+    .suite-company-note { padding: 1.1rem 1.4rem 1.2rem; border: 1px solid var(--suite-border-soft); background: var(--suite-panel); font-family: "Inter", sans-serif; }
+    .suite-company-note-title { margin-top: 0.55rem; font-family: "Playfair Display", serif; font-size: 1.375rem; font-weight: 600; line-height: 1.2; color: var(--suite-ink); }
+    .suite-company-note p { margin: 0.55rem 0 0; max-width: 46rem; font-size: 0.8125rem; line-height: 1.55; color: var(--suite-ink-muted); }
+    .suite-company-note p strong { color: var(--suite-ink); font-weight: 600; }
     .suite-tabs-shell { position: relative; border-top: 1px solid var(--suite-border-soft); }
     .suite-tabs-shell::after { content: "›"; position: absolute; z-index: 2; top: 0; right: 0; bottom: 0; width: 2.25rem; pointer-events: none; display: flex; align-items: center; justify-content: flex-end; padding-right: 0.35rem; color: var(--suite-ink-muted); font: 600 1rem/1 "Inter", sans-serif; background: linear-gradient(90deg, transparent, var(--suite-canvas) 62%); }
     .suite-tabs { scroll-snap-type: x proximity; scrollbar-width: none !important; }
@@ -120,7 +123,7 @@
       .suite-brand-copy { flex: 1 1 auto; }
       .suite-brand-title { font-size: 16px !important; white-space: normal; }
       .suite-title-short { display: inline-block; margin-right: 0.5rem; padding-right: 0.5rem; border-right: 1px solid var(--suite-border); font-family: "JetBrains Mono", monospace; font-size: 0.65rem; letter-spacing: 0.08em; vertical-align: 0.1rem; }
-      .suite-company-note { max-width: 19rem; }
+      .suite-company-note { padding: 0.9rem 1rem 1rem; }
       .suite-tab { padding-left: 0.85rem; padding-right: 0.85rem; }
       .suite-recommendation-title { font-size: 2rem; }
     }
