@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import "../styles/suite.css";
+import suiteLogo from "../assets/decision-intelligence-suite-logo.png.asset.json";
 
 /* ---------------------------------------------------------
    INLINE ICONS (Lucide-compatible paths, visual parity)
@@ -7,7 +8,6 @@ import "../styles/suite.css";
 const Icon = ({ children, size = 24, color = "currentColor", ...rest }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...rest}>{children}</svg>
 );
-const Gem = (p) => <Icon {...p}><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></Icon>;
 const Gauge = (p) => <Icon {...p}><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></Icon>;
 const Table2 = (p) => <Icon {...p}><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></Icon>;
 const Fingerprint = (p) => <Icon {...p}><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/><path d="M14 13.12c0 2.38 0 6.38-1 8.88"/><path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"/><path d="M2 12a10 10 0 0 1 18-6"/><path d="M2 16h.01"/><path d="M21.8 16c.2-2 .131-5.354 0-6"/><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2"/><path d="M8.65 22c.21-.66.45-1.32.57-2"/><path d="M9 6.8a6 6 0 0 1 9 5.2v2"/></Icon>;
@@ -390,18 +390,6 @@ function Eyebrow({ children, color = C.inkFaint }) {
 function IconBadge({ icon: IconComp, color = C.ink, size = 14, animKey }) {
   return (
     <span className="inline-flex items-center justify-center shrink-0 suite-icon-badge" style={{ color }}>
-      {animKey !== undefined ? (
-        <span key={animKey} className="scale-anim"><IconComp size={size} color={color} /></span>
-      ) : (
-        <IconComp size={size} color={color} />
-      )}
-    </span>
-  );
-}
-
-function LogoBadge({ icon: IconComp, color = C.ink, size = 17, animKey }) {
-  return (
-    <span className="inline-flex items-center justify-center shrink-0" style={{ width: 34, height: 34, borderRadius: 10, background: C.panelRaised, border: `1px solid ${C.border}` }}>
       {animKey !== undefined ? (
         <span key={animKey} className="scale-anim"><IconComp size={size} color={color} /></span>
       ) : (
@@ -1372,7 +1360,7 @@ function App() {
       <header className="sticky top-0 z-10" style={{ background: C.bg, borderBottom: `1px solid ${C.border}` }}>
         <div className="suite-header-main px-4 sm:px-6 lg:px-8 pt-3 pb-2 flex items-center gap-3">
           <div className="suite-brand flex items-center gap-3 min-w-0">
-            <LogoBadge icon={Gem} color={C.ink} animKey={scaleAnimKey} />
+            <img className="suite-brand-logo shrink-0" src={suiteLogo.url} alt="Decision Intelligence Suite diamond logo" />
             <div className="suite-brand-copy min-w-0">
               <div style={{ fontFamily: F_DISPLAY, fontWeight: 600, fontSize: 20, letterSpacing: 0.4 }} className="suite-brand-title">
                 <span className="suite-title-short" aria-hidden="true">DIS</span>
