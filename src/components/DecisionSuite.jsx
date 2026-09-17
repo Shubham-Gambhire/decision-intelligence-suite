@@ -384,7 +384,7 @@ function Stamp({ children, color = C.inkMuted, framed, onClick }) {
 }
 
 function Eyebrow({ children, color = C.inkFaint }) {
-  return <div style={{ fontFamily: F_LABEL, fontWeight: 600, fontSize: 11, letterSpacing: 2, color, textTransform: "uppercase" }}>{children}</div>;
+  return <h2 style={{ fontFamily: F_LABEL, fontWeight: 600, fontSize: 11, letterSpacing: 2, color, textTransform: "uppercase" }}>{children}</h2>;
 }
 
 function IconBadge({ icon: IconComp, color = C.ink, size = 14, animKey }) {
@@ -452,7 +452,7 @@ function fldBody(extra = {}) { return { ...fld(extra), fontFamily: F_BODY }; }
 
 function IconBtn({ onClick, children, title, danger }) {
   return (
-    <button onClick={onClick} title={title} className="flex items-center justify-center"
+    <button onClick={onClick} title={title} aria-label={title} className="flex items-center justify-center"
       style={{ width: 26, height: 26, border: `1px solid ${danger ? C.rust : C.border}`, color: danger ? C.rust : C.inkMuted, background: "transparent" }}>
       {children}
     </button>
@@ -1362,10 +1362,10 @@ function App() {
           <div className="suite-brand flex items-center gap-3 min-w-0">
             <img className="suite-brand-logo shrink-0" src={suiteLogo.url} alt="Decision Intelligence Suite diamond logo" />
             <div className="suite-brand-copy min-w-0">
-              <div style={{ fontFamily: F_DISPLAY, fontWeight: 600, fontSize: 20, letterSpacing: 0.4 }} className="suite-brand-title">
+              <h1 style={{ fontFamily: F_DISPLAY, fontWeight: 600, fontSize: 20, letterSpacing: 0.4 }} className="suite-brand-title">
                 <span className="suite-title-short" aria-hidden="true">DIS</span>
                 <span>DECISION INTELLIGENCE SUITE</span>
-              </div>
+              </h1>
             </div>
           </div>
         </div>

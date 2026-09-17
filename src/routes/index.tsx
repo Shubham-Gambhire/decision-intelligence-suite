@@ -5,6 +5,7 @@ import DecisionSuite from "@/components/DecisionSuite.jsx";
 import report from "@/assets/report.docx.asset.json";
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Decision Intelligence Suite | Scenario Planning" },
@@ -20,8 +21,10 @@ export const Route = createFileRoute("/")({
           "Compare strategic options under uncertainty using scenarios, constraints, evidence, and robustness analysis.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://disuite.lovable.app/" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://disuite.lovable.app/" }],
   }),
   component: Index,
 });
