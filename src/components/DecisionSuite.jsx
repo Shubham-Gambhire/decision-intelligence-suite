@@ -1386,7 +1386,7 @@ function App() {
         <div style={{ height: 3, backgroundImage: `repeating-linear-gradient(135deg, ${C.rust}66 0 6px, transparent 6px 12px)` }} />
       </header>
 
-      <main className="p-4 sm:p-6 lg:p-8 max-w-4xl lg:max-w-5xl mx-auto">
+      <main className="suite-workspace p-4 sm:p-6 lg:p-8 mx-auto">
         {tab === "board" && <SituationBoard metrics={metrics} financialOptimumId={financialOptimumId} disqualified={disqualified} financialPct={derived.financialPct} robustPct={derived.robustPct} robustPctRaw={derived.robustPctRaw} fragility={derived.fragility} fragilityReasons={derived.fragilityReasons} factors={factors} goTo={setTab} options={options} softContribution={derived.softContribution} />}
         {tab === "log" && <ScenarioLog scenarios={scenarios} setScenarios={markEdit(setScenarios)} options={options} />}
         {tab === "intel" && <FieldIntel factors={factors} setFactors={markEdit(setFactors)} onSave={saveAll} saveStatus={saveStatus} options={options} />}

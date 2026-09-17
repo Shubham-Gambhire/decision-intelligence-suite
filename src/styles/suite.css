@@ -89,6 +89,7 @@
     .cursor-pointer { cursor: pointer; }
 
     .suite-title-short { display: none; }
+    .suite-workspace { width: 100%; max-width: 88rem; }
     .suite-brand-logo { width: 34px; height: 34px; object-fit: contain; }
     .suite-brand-title { line-height: 1.2; }
     .suite-company-note { padding: 1.1rem 1.4rem 1.2rem; border: 1px solid var(--suite-border-soft); background: var(--suite-panel); font-family: "Inter", sans-serif; }
