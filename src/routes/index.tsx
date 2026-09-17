@@ -7,17 +7,17 @@ import report from "@/assets/report.docx.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Decision Intelligence Suite | Thistlewood Foods" },
+      { title: "Decision Intelligence Suite | Scenario Planning" },
       {
         name: "description",
         content:
-          "A structured decision intelligence suite: scenario modelling, field intel, tripwires and robustness-adjusted recommendations.",
+          "Compare strategic options under uncertainty using scenario modelling, constraints, evidence, and robustness analysis to make defensible decisions.",
       },
-      { property: "og:title", content: "Decision Intelligence Suite | Thistlewood Foods" },
+      { property: "og:title", content: "Decision Intelligence Suite | Scenario Planning" },
       {
         property: "og:description",
         content:
-          "Scenario modelling, constraints and robustness scoring for high-stakes allocation decisions.",
+          "Compare strategic options under uncertainty using scenarios, constraints, evidence, and robustness analysis.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
