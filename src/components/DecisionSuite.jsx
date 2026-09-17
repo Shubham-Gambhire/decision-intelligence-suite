@@ -581,6 +581,20 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
 
   return (
     <div className="flex flex-col gap-5">
+      {/* SCENARIO CONTEXT - who this decision belongs to */}
+      <section className="suite-company-note" aria-label="About this scenario">
+        <Eyebrow color={C.slate}>About this scenario</Eyebrow>
+        <div className="suite-company-note-title">Thistlewood Foods</div>
+        <p>
+          Thistlewood Foods is a fictional specialty foods company created for this decision scenario. Its Specialty Confections division enters every festive season with a fixed production capacity that must be allocated between two competing demands.
+        </p>
+        <p>
+          The choice is between <strong>Protect Core Accounts</strong>, which keeps existing contracted partners fully served at predictable margins, and <strong>Capture Surge Demand</strong>, which diverts capacity toward high-margin festive orders that may not repeat next year. This suite weighs both paths across weighted demand scenarios, applies hard constraints and qualitative factors, and recommends the option most likely to hold up under pressure.
+        </p>
+        <p>
+          Every company, division, partner and figure here is illustrative. Nothing corresponds to a real business; the numbers exist to demonstrate the decision framework itself.
+        </p>
+      </section>
       {/* PRIMARY RECOMMENDATION - the "so what" */}
       <BracketFrame variant="anchor" className="suite-recommendation" style={{ padding: 24 }} accent={bothDisqualified ? C.rust : C.slate}>
         <div className="flex items-start justify-between flex-wrap gap-3 mb-3">
@@ -1364,11 +1378,6 @@ function App() {
                 <span className="suite-title-short" aria-hidden="true">DIS</span>
                 <span>DECISION INTELLIGENCE SUITE</span>
               </div>
-              {tab === "board" && (
-                <div className="suite-company-note">
-                  Thistlewood Foods is a fictional specialty foods company created for this decision scenario.
-                </div>
-              )}
             </div>
           </div>
         </div>
