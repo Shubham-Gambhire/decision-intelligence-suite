@@ -35,18 +35,19 @@ const Upload = (p) => <Icon {...p}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2
    DESIGN TOKENS - unchanged
 --------------------------------------------------------- */
 const C = {
-  bg: "#F6F5F8",
-  panel: "#FFFFFF",
-  panelRaised: "#EFEEF3",
-  border: "#D4D2DC",
-  borderSoft: "#E6E4ED",
-  ink: "#1E1C24",
-  inkMuted: "#5A5668",
-  inkFaint: "#8B8799",
-  rust: "#C13B3B",
-  amber: "#B87A20",
-  slate: "#4A3F6B",
-  moss: "#2F6B5A",
+  bg: "var(--suite-canvas)",
+  panel: "var(--suite-panel)",
+  panelRaised: "var(--suite-field)",
+  panelTint: "var(--suite-accent-soft)",
+  border: "var(--suite-border)",
+  borderSoft: "var(--suite-border-soft)",
+  ink: "var(--suite-ink)",
+  inkMuted: "var(--suite-ink-muted)",
+  inkFaint: "var(--suite-ink-faint)",
+  rust: "var(--suite-alert)",
+  amber: "var(--suite-ink-muted)",
+  slate: "var(--suite-accent)",
+  moss: "var(--suite-accent)",
 };
 
 const F_DISPLAY = "'Playfair Display', serif";
@@ -351,7 +352,7 @@ function validateImport(obj) {
 /* ---------------------------------------------------------
    UI PRIMITIVES - visual system preserved
 --------------------------------------------------------- */
-function BracketFrame({ children, style, accent = C.border, className = "" }) {
+function BracketFrame({ children, style, accent = C.border, className = "", variant = "panel" }) {
   const seg = (pos) => {
     const base = { position: "absolute", width: 11, height: 11, borderColor: accent };
     const m = {
@@ -363,8 +364,8 @@ function BracketFrame({ children, style, accent = C.border, className = "" }) {
     return { ...base, ...m[pos] };
   };
   return (
-    <div className={`relative ${className}`} style={{ background: C.panel, ...style }}>
-      <span style={seg("tl")} /><span style={seg("tr")} /><span style={seg("bl")} /><span style={seg("br")} />
+    <div className={`relative suite-frame suite-frame-${variant} ${className}`} style={{ background: C.panel, borderColor: accent, ...style }}>
+      {variant === "anchor" && <><span style={seg("tl")} /><span style={seg("tr")} /><span style={seg("bl")} /><span style={seg("br")} /></>}
       {children}
     </div>
   );
@@ -388,13 +389,13 @@ function Eyebrow({ children, color = C.inkFaint }) {
 
 function IconBadge({ icon: IconComp, color = C.ink, size = 14, animKey }) {
   return (
-    <BracketFrame accent={color} className="inline-flex items-center justify-center shrink-0" style={{ width: 28, height: 28, background: C.panelRaised }}>
+    <span className="inline-flex items-center justify-center shrink-0 suite-icon-badge" style={{ color }}>
       {animKey !== undefined ? (
         <span key={animKey} className="scale-anim"><IconComp size={size} color={color} /></span>
       ) : (
         <IconComp size={size} color={color} />
       )}
-    </BracketFrame>
+    </span>
   );
 }
 
@@ -412,7 +413,7 @@ function LogoBadge({ icon: IconComp, color = C.ink, size = 17, animKey }) {
 
 function Intro({ children }) {
   return (
-    <BracketFrame style={{ padding: 14 }}>
+    <BracketFrame style={{ padding: 24 }}>
       <p style={{ fontFamily: F_BODY, fontSize: 13, color: C.ink, lineHeight: 1.55 }}>{children}</p>
     </BracketFrame>
   );
@@ -457,7 +458,7 @@ function Ticker({ items }) {
 }
 
 function fld(extra = {}) {
-  return { background: C.panelRaised, border: `1px solid ${C.border}`, color: C.ink, fontFamily: F_MONO, fontSize: 12.5, padding: "7px 9px", borderRadius: 0, outline: "none", ...extra };
+  return { background: C.panelRaised, border: `1px solid ${C.border}`, color: C.ink, fontFamily: F_MONO, fontVariantNumeric: "tabular-nums", fontSize: 12.5, minHeight: 40, padding: "9px 11px", borderRadius: 3, outline: "none", ...extra };
 }
 function fldBody(extra = {}) { return { ...fld(extra), fontFamily: F_BODY }; }
 
@@ -497,30 +498,30 @@ function PositionLine({ financialPct, robustPct, disqualified, protectLabel, sur
   const finLeft = clamp(financialPct, 2, 98);
   const robLeft = clamp(robustPct, 2, 98);
   return (
-    <div className="w-full">
-      <div className="flex items-center justify-between mb-3" style={{ fontFamily: F_LABEL, fontSize: 12, letterSpacing: 1.5, textTransform: "uppercase", fontWeight: 600 }}>
+    <div className="w-full suite-position-line">
+      <div className="flex items-center justify-between mb-3" style={{ fontFamily: F_LABEL, fontSize: 12, textTransform: "uppercase", fontWeight: 600 }}>
         <span style={{ color: C.slate }}>◀ {protectLabel}</span>
         <span style={{ color: C.rust }}>{surgeLabel} ▶</span>
       </div>
-      <div className="relative" style={{ height: 72 }}>
+      <div className="relative" style={{ height: 92 }}>
         {/* Track */}
-        <div className="absolute left-0 right-0" style={{ top: 32, height: 6, background: `linear-gradient(90deg, ${C.slate}44, ${C.panelRaised} 50%, ${C.rust}44)`, border: `1px solid ${C.border}`, borderRadius: 1 }} />
+        <div className="absolute left-0 right-0 suite-position-track" style={{ top: 40 }} />
         {/* Tick marks */}
         {Array.from({ length: 11 }).map((_, i) => (
-          <div key={i} className="absolute" style={{ left: `${i * 10}%`, top: 26, width: 1, height: 18, background: i === 5 ? C.inkFaint : C.borderSoft }} />
+          <div key={i} className="absolute" style={{ left: `${i * 10}%`, top: 33, width: 1, height: i === 5 ? 24 : 16, background: i === 5 ? C.inkFaint : C.border }} />
         ))}
         {/* Financial optimum - hollow diamond, above track */}
-        <div className="absolute transition-all duration-300 ease-out flex flex-col items-center" style={{ left: `${finLeft}%`, top: 0, transform: "translateX(-50%)" }} title="Financial optimum (pure expected value)">
+        <div className="absolute transition-all duration-300 ease-out flex flex-col items-center" style={{ left: `${finLeft}%`, top: 4, transform: "translateX(-50%)" }} title="Financial optimum (pure expected value)">
           <div style={{ width: 14, height: 14, transform: "rotate(45deg)", background: C.panel, border: `2.5px solid ${C.ink}`, boxShadow: "0 0 0 1px " + C.panel }} />
           <div style={{ width: 2, height: 10, background: C.ink, marginTop: -1 }} />
         </div>
         {/* Gap callout */}
-        <div className="absolute flex items-center justify-center" style={{ left: "50%", top: 14, transform: "translateX(-50%)" }}>
+        <div className="absolute flex items-center justify-center" style={{ left: "50%", top: 7, transform: "translateX(-50%)" }}>
           <span style={{ fontFamily: F_MONO, fontSize: 10, color: C.inkMuted, background: C.panel, padding: "1px 6px", border: `1px solid ${C.borderSoft}`, whiteSpace: "nowrap" }}>Δ {gap.toFixed(0)} pt</span>
         </div>
         {/* Robustness-adjusted - solid flag, below track */}
         {!bothDisqualified && (
-          <div className="absolute transition-all duration-300 ease-out flex flex-col items-center" style={{ left: `${robLeft}%`, top: 38, transform: "translateX(-50%)" }} title="Robustness-adjusted position">
+          <div className="absolute transition-all duration-300 ease-out flex flex-col items-center" style={{ left: `${robLeft}%`, top: 46, transform: "translateX(-50%)" }} title="Robustness-adjusted position">
             <div style={{ width: 2, height: 10, background: disqualified ? C.rust : C.slate }} />
             <div style={{ width: 0, height: 0, borderLeft: "8px solid transparent", borderRight: "8px solid transparent", borderTop: `12px solid ${disqualified ? C.rust : C.slate}` }} />
             {disqualified && (
@@ -529,7 +530,7 @@ function PositionLine({ financialPct, robustPct, disqualified, protectLabel, sur
           </div>
         )}
       </div>
-      <div className="flex items-center gap-5 mt-2 flex-wrap" style={{ fontFamily: F_MONO, fontSize: 11, color: C.inkMuted }}>
+      <div className="flex items-center gap-5 flex-wrap" style={{ fontFamily: F_MONO, fontSize: 11, color: C.inkMuted }}>
         <span className="flex items-center gap-2">
           <span style={{ width: 10, height: 10, border: `2.5px solid ${C.ink}`, transform: "rotate(45deg)", display: "inline-block", background: C.panel }} />
           Financial optimum
@@ -581,7 +582,7 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
   return (
     <div className="flex flex-col gap-5">
       {/* PRIMARY RECOMMENDATION - the "so what" */}
-      <BracketFrame style={{ padding: 20 }} accent={bothDisqualified ? C.rust : C.slate}>
+      <BracketFrame variant="anchor" className="suite-recommendation" style={{ padding: 24 }} accent={bothDisqualified ? C.rust : C.slate}>
         <div className="flex items-start justify-between flex-wrap gap-3 mb-3">
           <Eyebrow color={bothDisqualified ? C.rust : C.slate}>Primary recommendation</Eyebrow>
           <Stamp color={fragColor} framed onClick={() => goTo("trip")}>FRAGILITY: {fragility}</Stamp>
@@ -591,16 +592,16 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
           <div className="flex items-start gap-3">
             <XCircle size={28} color={C.rust} className="mt-0.5 shrink-0" />
             <div>
-              <div style={{ fontFamily: F_DISPLAY, fontSize: 22, color: C.rust, letterSpacing: 0.3, lineHeight: 1.25 }}>No viable option</div>
-              <p style={{ fontFamily: F_BODY, fontSize: 14, color: C.ink, lineHeight: 1.55, marginTop: 6 }}>{rationale}</p>
+              <div className="suite-recommendation-title" style={{ color: C.rust }}>No viable option</div>
+              <p className="suite-body-copy" style={{ color: C.ink, marginTop: 8 }}>{rationale}</p>
             </div>
           </div>
         ) : (
           <div>
-            <div style={{ fontFamily: F_DISPLAY, fontSize: 22, color: C.ink, letterSpacing: 0.3, lineHeight: 1.25 }}>
+            <div className="suite-recommendation-title" style={{ color: C.ink }}>
               {recommended?.name || "-"}
             </div>
-            <p style={{ fontFamily: F_BODY, fontSize: 14, color: C.inkMuted, lineHeight: 1.55, marginTop: 6, maxWidth: 640 }}>{rationale}</p>
+            <p className="suite-body-copy" style={{ color: C.inkMuted, marginTop: 8, maxWidth: 680 }}>{rationale}</p>
           </div>
         )}
 
@@ -639,7 +640,7 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
       </BracketFrame>
 
       {/* Position Line */}
-      <BracketFrame style={{ padding: 20 }}>
+      <BracketFrame className="suite-position-panel" style={{ padding: 24 }}>
         <Eyebrow>Position line</Eyebrow>
         <div className="mt-3">
           <PositionLine
@@ -660,7 +661,7 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
           const dq = disqualified[o.id];
           const isRec = recId === o.id && !bothDisqualified;
           return (
-            <BracketFrame key={o.id} style={{ padding: 16, opacity: dq ? 0.55 : 1, background: isRec ? C.panel : C.panel }} accent={dq ? C.rust : isRec ? C.slate : C.borderSoft}>
+            <BracketFrame key={o.id} className={isRec ? "suite-option-recommended" : ""} style={{ padding: 24, opacity: dq ? 0.55 : 1, background: isRec ? C.panelTint : C.panel }} accent={dq ? C.rust : isRec ? C.slate : C.borderSoft}>
               <div className="flex items-center justify-between mb-1 gap-2">
                 <span style={{ fontFamily: F_LABEL, fontSize: 15, color: C.ink, letterSpacing: 0.3, fontWeight: 600 }}>{o.name}</span>
                 <div className="flex items-center gap-1.5">
@@ -676,7 +677,7 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
                   { label: "WORST VALUE", value: `₹${m.worst.toFixed(0)} Cr` },
                   { label: "WORST REGRET", value: `₹${m.worstRegret.toFixed(0)} Cr` },
                 ].map((cell) => (
-                  <div key={cell.label} style={{ background: C.panel, padding: "10px 12px" }}>
+                  <div key={cell.label} style={{ background: "transparent", padding: "12px 14px" }}>
                     <div style={{ fontFamily: F_MONO, fontSize: 9.5, color: C.inkFaint, letterSpacing: 0.8 }}>{cell.label}</div>
                     <div style={{ fontFamily: F_MONO, fontSize: 16, fontWeight: 600, color: C.ink, marginTop: 2 }}>{cell.value}</div>
                   </div>
@@ -688,7 +689,7 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
       </div>
 
       {/* Flagged factors - tighter */}
-      <BracketFrame style={{ padding: 16 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-center justify-between mb-1">
           <Eyebrow>Key factors</Eyebrow>
           <button onClick={() => goTo("intel")} style={{ fontFamily: F_MONO, fontSize: 11, color: C.inkMuted, background: "transparent", border: "none", cursor: "pointer" }}>
@@ -747,7 +748,7 @@ function ScenarioLog({ scenarios, setScenarios, options }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <BracketFrame style={{ padding: 14 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.5, maxWidth: 620 }}>
             This is the MILP's output, not a live solver - each row is a scenario with a value already computed for each option. Edit freely; every other tab recalculates from this table.
@@ -822,7 +823,7 @@ function FieldIntel({ factors, setFactors, onSave, saveStatus, options }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <BracketFrame style={{ padding: 14 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.5, maxWidth: 560 }}>
             <span style={{ color: C.ink, fontWeight: 600 }}>Not every risk can be priced.</span> This is where judgment calls get written down instead of guessed at. Three ways a factor can enter the picture - set with the <strong style={{ color: C.ink }}>Type</strong> field on each card:{" "}
@@ -843,7 +844,7 @@ function FieldIntel({ factors, setFactors, onSave, saveStatus, options }) {
           </BracketFrame>
         )}
         {factors.map((f) => (
-          <BracketFrame key={f.id} style={{ padding: 16, opacity: f.type === "hard" && !f.active ? 0.72 : 1 }} accent={f.type === "hard" && f.active ? C.rust : TYPE_META[f.type].color}>
+          <BracketFrame key={f.id} style={{ padding: 24, opacity: f.type === "hard" && !f.active ? 0.72 : 1 }} accent={f.type === "hard" && f.active ? C.rust : TYPE_META[f.type].color}>
             <div className="flex items-start justify-between gap-3 flex-wrap mb-3">
               <input value={f.name} onChange={(e) => update(f.id, "name", e.target.value)} style={fldBody({ fontWeight: 600, fontSize: 14, flex: "1 1 200px", background: "transparent", border: "none", padding: "2px 0" })} />
               <div className="flex items-center gap-2">
@@ -925,7 +926,7 @@ function Tripwires({ scenarios, metrics, constraintActive, serviceFloorPct, core
         This tab stress-tests the recommendation: how often each option actually wins, how bad its worst case is, and exactly what would need to change for the recommendation to flip.
       </Intro>
 
-      <BracketFrame style={{ padding: 16 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <Eyebrow>Robustness metrics</Eyebrow>
         <div className="overflow-x-auto mt-3">
           <table className="w-full text-sm" style={{ fontFamily: F_BODY }}>
@@ -962,7 +963,7 @@ function Tripwires({ scenarios, metrics, constraintActive, serviceFloorPct, core
         </div>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 16 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <Eyebrow>Continuous tripwire - Base Case allocation</Eyebrow>
           <SaveButton onClick={onSaveQs} status={qsSaveStatus} />
@@ -988,7 +989,7 @@ function Tripwires({ scenarios, metrics, constraintActive, serviceFloorPct, core
         )}
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 16 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <Eyebrow>Discrete tripwires - scenario-driven flips</Eyebrow>
         <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.5 }} className="mt-2 mb-3">
           No formula links these scenarios to a value - each is a separate MILP re-run. A flip here means the scenario itself, not a sliding number, changes which option wins.
@@ -1041,7 +1042,7 @@ function CommandSettings({ riskPosture, setRiskPosture, softWeight, setSoftWeigh
 
   return (
     <div className="flex flex-col gap-5">
-      <BracketFrame style={{ padding: 16 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-start justify-between gap-3 flex-wrap mb-2">
           <Eyebrow>Decision options</Eyebrow>
           <SaveButton onClick={onSave} status={saveStatus} />
@@ -1062,7 +1063,7 @@ function CommandSettings({ riskPosture, setRiskPosture, softWeight, setSoftWeigh
         <div style={{ fontFamily: F_MONO, fontSize: 10, color: C.inkFaint }} className="mt-2">The internal roles (which one is "protect", which is "surge") stay fixed - only the labels shown throughout the tool change.</div>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 16 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-center justify-between mb-4">
           <Eyebrow>Adjustments</Eyebrow>
           <button onClick={onReset} className="flex items-center gap-1.5 px-3 py-1.5" style={{ fontFamily: F_MONO, fontSize: 11, color: C.inkMuted, border: `1px solid ${C.border}` }}>
@@ -1096,7 +1097,7 @@ function CommandSettings({ riskPosture, setRiskPosture, softWeight, setSoftWeigh
         </div>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 16 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <Eyebrow>Core service floor</Eyebrow>
         <p style={{ fontFamily: F_BODY, fontSize: 12, color: C.inkMuted, lineHeight: 1.5 }} className="mt-2 mb-3">
           The one numeric, formula-enforced constraint in this tool - caps the Qs slider on the Tripwires tab. Everything else in Qualitative Factors is a manual judgment call by design.
@@ -1118,7 +1119,7 @@ function CommandSettings({ riskPosture, setRiskPosture, softWeight, setSoftWeigh
         </div>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 16 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <Eyebrow>Export / Import</Eyebrow>
         <p style={{ fontFamily: F_BODY, fontSize: 12, color: C.inkMuted, lineHeight: 1.5 }} className="mt-2 mb-3">
           Download the full decision package (scenarios, factors, settings, options) as JSON, or restore one previously exported. Import validates shape and falls back gracefully on bad data.
@@ -1143,14 +1144,14 @@ function CommandSettings({ riskPosture, setRiskPosture, softWeight, setSoftWeigh
 function FieldManual() {
   return (
     <div className="flex flex-col gap-5">
-      <BracketFrame style={{ padding: 18 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-center gap-2 mb-3"><IconBadge icon={Target} color={C.rust} /><h3 style={{ fontFamily: F_LABEL, fontSize: 16, color: C.ink, letterSpacing: 0.5 }}>What this tool is for</h3></div>
         <p style={{ fontFamily: F_BODY, fontSize: 13, color: C.inkMuted, lineHeight: 1.65 }}>
           A mathematically optimal decision and a robust one are not always the same decision. Decision Intelligence Suite takes an optimizer's output - a value per option, per scenario - and asks whether that optimum survives contact with uncertainty, hard constraints, and factors nobody can honestly price in dollars. It does not run an optimizer itself. The Scenario Log is where that output gets typed in, exactly the way a stock-ageing report gets typed into a spreadsheet.
         </p>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 18 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-center gap-2 mb-3"><IconBadge icon={Compass} color={C.slate} /><h3 style={{ fontFamily: F_LABEL, fontSize: 16, color: C.ink, letterSpacing: 0.5 }}>What's real math vs. illustrative</h3></div>
         <div className="flex flex-col">
           <div className="py-3" style={{ borderLeft: `3px solid ${C.moss}`, paddingLeft: 12 }}>
@@ -1168,7 +1169,7 @@ function FieldManual() {
         </div>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 18 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-center gap-2 mb-3"><IconBadge icon={ScrollText} color={C.amber} /><h3 style={{ fontFamily: F_LABEL, fontSize: 16, color: C.ink, letterSpacing: 0.5 }}>What it deliberately does not do</h3></div>
         <ul style={{ fontFamily: F_BODY, fontSize: 13, color: C.inkMuted, lineHeight: 1.9 }} className="list-disc pl-5">
           <li>It does not run or replace an optimizer - the Scenario Log is an input surface, not a solver.</li>
@@ -1178,7 +1179,7 @@ function FieldManual() {
         </ul>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 18 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-center gap-2 mb-3"><IconBadge icon={HelpCircle} color={C.slate} /><h3 style={{ fontFamily: F_LABEL, fontSize: 16, color: C.ink, letterSpacing: 0.5 }}>Isn't scoring a factor still quantifying it?</h3></div>
         <p style={{ fontFamily: F_BODY, fontSize: 13, color: C.ink, lineHeight: 1.65 }} className="mb-4">
           Yes - technically, it is a form of quantification. Assigning weights to a factor and multiplying it into a formula puts a number on something qualitative. Pretending otherwise would undercut the credibility this tool depends on. The distinction that actually matters isn't numbers versus no numbers - it's what kind of number, and what it's allowed to do.
@@ -1206,7 +1207,7 @@ function FieldManual() {
         </p>
       </BracketFrame>
 
-      <BracketFrame style={{ padding: 18 }}>
+      <BracketFrame style={{ padding: 24 }}>
         <div className="flex items-center gap-2 mb-3"><IconBadge icon={Info} color={C.inkMuted} /><h3 style={{ fontFamily: F_LABEL, fontSize: 16, color: C.ink, letterSpacing: 0.5 }}>Provenance & persistence</h3></div>
         <p style={{ fontFamily: F_BODY, fontSize: 12.5, color: C.inkMuted, lineHeight: 1.6 }}>
           Thistlewood Foods, its Specialty Confections division, and every named scenario in this prototype are fictional. The two base-case endpoint values and the capacity-allocation formula carry over the numeric structure from a supply-chain case exercise; nothing here corresponds to any real company's figures. Full decision state (scenarios, factors, settings, options) is persisted to the browser's localStorage and can be exported/imported as JSON.
@@ -1331,13 +1332,11 @@ function App() {
     setQsAllocation(MAX_SURGE);
   };
 
-  const fragColor = derived.fragility === "HIGH" ? C.rust : derived.fragility === "MEDIUM" ? C.amber : C.moss;
-
-  return (
+    return (
     <div style={{ background: C.bg, minHeight: "100vh", color: C.ink }}>
       <style>{`
         * { box-sizing: border-box; }
-        input:focus-visible, select:focus-visible, button:focus-visible, textarea:focus-visible { outline: 2px solid ${C.rust}; outline-offset: 1px; }
+        input:focus-visible, select:focus-visible, button:focus-visible, textarea:focus-visible { outline: 2px solid ${C.slate}; outline-offset: 1px; }
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-thumb { background: ${C.border}; }
         @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
