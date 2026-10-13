@@ -603,7 +603,7 @@ function SituationBoard({ metrics, financialOptimumId, disqualified, financialPc
             <div className="suite-recommendation-title" style={{ color: C.ink }}>
               {recommended?.name || "-"}
             </div>
-            <p className="suite-body-copy" style={{ color: C.inkMuted, marginTop: 8, maxWidth: 680 }}>{rationale}</p>
+            <p className="suite-body-copy" style={{ color: C.inkMuted, marginTop: 8 }}>{rationale}</p>
           </div>
         )}
 
@@ -1395,10 +1395,6 @@ function App() {
         {tab === "manual" && <FieldManual />}
       </main>
 
-      <footer className="px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between flex-wrap gap-2" style={{ borderTop: `1px solid ${C.borderSoft}` }}>
-        <span style={{ fontFamily: F_LABEL, fontWeight: 600, fontSize: 10.5, letterSpacing: 2.5, color: C.inkMuted, textTransform: "uppercase" }}>Discern · Decide · Direct</span>
-        <span style={{ fontFamily: F_LABEL, fontSize: 10.5, letterSpacing: 0.5, color: C.inkFaint, textTransform: "uppercase" }}>Clarity through structure. Confidence through discernment.</span>
-      </footer>
     </div>
   );
 }
